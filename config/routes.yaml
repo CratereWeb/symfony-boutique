@@ -7,3 +7,7 @@ user_create:
     path: /user/create
     controller: App\Controller\UserController::create
     methods: [GET, POST]
+user_show:
+    path: /user/show
+    controller: App\Controller\UserController::show
+    methods: [GET]
