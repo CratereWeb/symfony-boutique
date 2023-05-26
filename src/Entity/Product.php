@@ -36,6 +36,9 @@ class Product
     #[ORM\ManyToOne(inversedBy: 'products')]
     private ?Category $category = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
     public function __construct()
     {
         $this->commandLines = new ArrayCollection();
@@ -165,5 +168,21 @@ class Product
         $this->category = $category;
 
         return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+    public function __toString()
+    {
+        return $this->category;
     }
 }

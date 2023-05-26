@@ -8,36 +8,55 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>FirstName</th>
-                <th>Phone</th>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <th>Id</th>
+                {% endif %}
+                
                 <th>Email</th>
+                
+                {% if is_granted('ROLE_ADMIN') %}
+                    <th>Roles</th>
+                {% endif %}
+                
                 <th>Password</th>
-                <th>actions</th>
+                <th>Lastname</th>
+                <th>Firstname</th>
+                <th>Phone</th>
+
+                {% if is_granted('ROLE_ADMIN') %}
+                    <th>actions</th>
+                {% endif %}
             </tr>
         </thead>
         <tbody>
         {% for user in users %}
             <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.name }}</td>
-                <td>{{ user.firstName }}</td>
-                <td>{{ user.phone }}</td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <td>{{ user.id }}</td>
+                {% endif %}
                 <td>{{ user.email }}</td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                {% endif %}
                 <td>{{ user.password }}</td>
-                <td>
-                    <a href="{{ path('app_user_show', {'id': user.id}) }}">show</a>
-                    <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
-                </td>
+                <td>{{ user.lastname }}</td>
+                <td>{{ user.firstname }}</td>
+                <td>{{ user.phone }}</td>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <td>
+                        <a href="{{ path('app_user_show', {'id': user.id}) }}">show</a>
+                        <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
+                    </td>
+                {% endif %}
             </tr>
         {% else %}
             <tr>
-                <td colspan="7">no records found</td>
+                <td colspan="8">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_user_new') }}">Create new</a>
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('app_user_new') }}">Create new</a>
+    {% endif %}
 {% endblock %}

@@ -1,4 +1,12 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
+    <div>
+        <label for="{{form.roles.vars.id}}">Role:</label>
+        <select id="{{ form.roles.vars.id }}" name="{{ form.roles.vars.full_name }}[]" multiple>
+            {% for role in form.roles.vars.choices %}
+                <option value="{{ role.value }}">{{ role.label }}</option>
+            {% endfor %}
+        </select>
+    </div>
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
